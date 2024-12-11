@@ -367,6 +367,7 @@
         const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
         const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
         const totalDays = lastDay.getDate();
+        const startingDayOfWeek = firstDay.getDay();
 
         // Create grid template columns
         timelineGrid.style.gridTemplateColumns = `150px repeat(${totalDays}, 1fr)`;
@@ -378,9 +379,12 @@
         headerRow.innerHTML = `
       <div class="border p-2 font-bold bg-gray-100 sticky left-0">Employee Name</div>
         ${Array.from({ length: totalDays }, (_, i) => {
-          const date = new Date();
-          date.setDate(date.getDate() - date.getDate() + 1 + i);
-          const dayName = dayNames[date.getDay()];
+          const currentDate = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            i + 1
+          );
+          const dayName = dayNames[currentDate.getDay()];
           const isWeekend = dayName === "Sat" || dayName === "Sun";
           const bgColor = isWeekend ? "bg-blue-200" : "bg-gray-100";
           return `
