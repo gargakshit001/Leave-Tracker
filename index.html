@@ -16,40 +16,49 @@
         border-radius: 4px;
         font-size: 0.75rem;
       }
+
       .first-half-day {
         background-color: #4299e1;
       }
+
       .second-half-day {
         background-color: #9f7aea;
       }
+
       .timeline-grid {
         display: grid;
         overflow-x: auto;
       }
+
       .timeline-header {
         position: sticky;
         top: 0;
         background-color: white;
         z-index: 10;
       }
+
       @media (max-width: 1024px) {
         .leave-management-flex {
           flex-direction: column;
           align-items: stretch;
         }
+
         .leave-management-flex > * {
           margin-bottom: 0.5rem;
           width: 100%;
         }
+
         .leave-management-flex button {
           align-self: auto;
         }
+
         .sticky.left-0 {
           background: #f9fafb;
         }
       }
     </style>
   </head>
+
   <body class="bg-gray-100 p-4">
     <div class="container mx-auto max-w-6xl bg-white shadow-lg rounded-lg p-6">
       <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
@@ -103,64 +112,57 @@
       <div class="mb-6">
         <h2 class="text-xl font-semibold mb-4">Add Leave</h2>
         <div class="flex flex-col>
-          <div
-            class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4"
-          >
-            <select id="employeeSelect" class="flex-grow p-2 border rounded">
-              <option>Select Employee</option>
+        <div
+          class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4"
+        >
+          <select id="employeeSelect" class="flex-grow p-2 border rounded">
+            <option>Select Employee</option>
+          </select>
+
+          <div class="flex flex-col">
+            <label for="leaveStartDate" class="text-sm mb-1">Start Date</label>
+            <input type="date" id="leaveStartDate" class="p-2 border rounded" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="leaveEndDate" class="text-sm mb-1">End Date</label>
+            <input type="date" id="leaveEndDate" class="p-2 border rounded" />
+          </div>
+
+          <div class="flex flex-col">
+            <label for="leaveType" class="text-sm mb-1">Leave Type</label>
+            <select id="leaveType" class="p-2 border rounded">
+              <option value="full">Full Day</option>
+              <option value="first-half">First Half</option>
+              <option value="second-half">Second Half</option>
             </select>
+          </div>
 
-            <div class="flex flex-col">
-              <label for="leaveStartDate" class="text-sm mb-1"
-                >Start Date</label
-              >
-              <input
-                type="date"
-                id="leaveStartDate"
-                class="p-2 border rounded"
-              />
-            </div>
-
-            <div class="flex flex-col">
-              <label for="leaveEndDate" class="text-sm mb-1">End Date</label>
-              <input type="date" id="leaveEndDate" class="p-2 border rounded" />
-            </div>
-
-            <div class="flex flex-col">
-              <label for="leaveType" class="text-sm mb-1">Leave Type</label>
-              <select id="leaveType" class="p-2 border rounded">
-                <option value="full">Full Day</option>
-                <option value="first-half">First Half</option>
-                <option value="second-half">Second Half</option>
-              </select>
-            </div>
-
-            <div class="flex items-end">
-              <button
-                onclick="addLeave()"
-                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-1"
-              >
-                Add Leave
-              </button>
-            </div>
+          <div class="flex items-end">
+            <button
+              onclick="addLeave()"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-1"
+            >
+              Add Leave
+            </button>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Timeline Section -->
-      <div class="my-6">
-        <div class="calendar-header flex justify-between items-center mb-4">
-          <button onclick="changeMonth(-1)" class="p-2 bg-gray-200 rounded">
-            &lt; Prev
-          </button>
-          <h3 id="calendarMonthYear" class="text-xl font-semibold"></h3>
-          <button onclick="changeMonth(1)" class="p-2 bg-gray-200 rounded">
-            Next &gt;
-          </button>
-        </div>
-        <div id="timelineContainer" class="border overflow-x-auto">
-          <div id="timelineGrid" class="timeline-grid"></div>
-        </div>
+    <!-- Timeline Section -->
+    <div class="my-6">
+      <div class="calendar-header flex justify-between items-center mb-4">
+        <button onclick="changeMonth(-1)" class="p-2 bg-gray-200 rounded">
+          &lt; Prev
+        </button>
+        <h3 id="calendarMonthYear" class="text-xl font-semibold"></h3>
+        <button onclick="changeMonth(1)" class="p-2 bg-gray-200 rounded">
+          Next &gt;
+        </button>
+      </div>
+      <div id="timelineContainer" class="border overflow-x-auto">
+        <div id="timelineGrid" class="timeline-grid"></div>
       </div>
     </div>
 
@@ -235,7 +237,7 @@
             }
             showToast("Employee removed");
             fetchEmployees(); // Refresh the employee list
-            fetchLeaves // Refresh the leaves
+            fetchLeaves; // Refresh the leaves
           })
           .catch((error) => {
             alert(error.message);
@@ -249,16 +251,17 @@
         addSelect.innerHTML = "<option>Select Employee</option>";
         removeSelect.innerHTML = "<option>Select Employee</option>";
 
-        empoloyess && employees.forEach((employee) => {
-          const addOption = document.createElement("option");
-          addOption.value = employee.id;
-          addOption.textContent = `${employee.name} (${employee.id})`;
+        empoloyess &&
+          employees.forEach((employee) => {
+            const addOption = document.createElement("option");
+            addOption.value = employee.id;
+            addOption.textContent = `${employee.name} (${employee.id})`;
 
-          const removeOption = addOption.cloneNode(true);
+            const removeOption = addOption.cloneNode(true);
 
-          addSelect.appendChild(addOption);
-          removeSelect.appendChild(removeOption);
-        });
+            addSelect.appendChild(addOption);
+            removeSelect.appendChild(removeOption);
+          });
       }
 
       function addLeave() {
@@ -321,11 +324,12 @@
         fetch("/api/leaves")
           .then((response) => response.json())
           .then((data) => {
-            employees && employees.forEach((employee) => {
-              employee.leaves = data.filter(
-                (leave) => leave.employee_id === employee.id
-              );
-            });
+            employees &&
+              employees.forEach((employee) => {
+                employee.leaves = data.filter(
+                  (leave) => leave.employee_id === employee.id
+                );
+              });
             renderTimeline(currentDate);
           })
           .catch((error) => {
@@ -370,83 +374,99 @@
         // Create header row with dates
         const headerRow = document.createElement("div");
         headerRow.className = "contents timeline-header";
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         headerRow.innerHTML = `
-                <div class="border p-2 font-bold bg-gray-100 sticky left-0">Employee Name</div>
-                ${Array.from(
-                  { length: totalDays },
-                  (_, i) => `
-                    <div class="border p-2 text-center bg-gray-100">${
-                      i + 1
-                    }</div>
-                `
-                ).join("")}
-            `;
+      <div class="border p-2 font-bold bg-gray-100 sticky left-0">Employee Name</div>
+        ${Array.from({ length: totalDays }, (_, i) => {
+          const date = new Date();
+          date.setDate(date.getDate() - date.getDate() + 1 + i);
+          const dayName = dayNames[date.getDay()];
+          const isWeekend = dayName === "Sat" || dayName === "Sun";
+          const bgColor = isWeekend ? "bg-blue-200" : "bg-gray-100";
+          return `
+            <div class="border p-2 text-center ${bgColor}">
+              ${dayName} ${i + 1}
+            </div>`;
+        }).join("")}
+      `;
+
         timelineGrid.appendChild(headerRow);
 
         // Render each employee's row
-        employes && employees.forEach((employee) => {
-          const employeeRow = document.createElement("div");
-          employeeRow.className = "contents";
+        employees &&
+          employees.forEach((employee) => {
+            const employeeRow = document.createElement("div");
+            employeeRow.className = "contents";
 
-          // Employee name cell
-          const nameCell = document.createElement("div");
-          nameCell.className = "border p-2 sticky left-0 bg-white";
-          nameCell.textContent = employee.name + " (" + employee.id + ")";
-          employeeRow.appendChild(nameCell);
+            // Employee name cell
+            const nameCell = document.createElement("div");
+            nameCell.className = "border p-2 sticky left-0 bg-white";
+            nameCell.textContent = employee.name + " (" + employee.id + ")";
+            employeeRow.appendChild(nameCell);
 
-          // Create cells for each day
-          for (let day = 1; day <= totalDays; day++) {
-            const dayCell = document.createElement("div");
-            dayCell.className = "border p-1";
+            // Create cells for each day
+            for (let day = 1; day <= totalDays; day++) {
+              const dayCell = document.createElement("div");
+              dayCell.className = "border p-1";
 
-            // Check for leaves on this day
-            const currentDate = new Date(
-              date.getFullYear(),
-              date.getMonth(),
-              day
-            );
-            const leavesOnDay = employee?.leaves.filter((leave) =>
-              isDateInLeaveRange(currentDate, leave.start_date, leave.end_date)
-            );
+              // Check for leaves on this day
+              const currentDate = new Date(
+                date.getFullYear(),
+                date.getMonth(),
+                day
+              );
+              const leavesOnDay = employee?.leaves.filter((leave) =>
+                isDateInLeaveRange(
+                  currentDate,
+                  leave.start_date,
+                  leave.end_date
+                )
+              );
 
-            // Add leave markers
-            leavesOnDay.forEach((leave) => {
-              const leaveCell = document.createElement("div");
+              // Add leave markers
+              leavesOnDay.forEach((leave) => {
+                const leaveCell = document.createElement("div");
 
-              // Set different styles for different leave types
-              switch (leave.type) {
-                case "full":
-                  leaveCell.className = "leave-cell";
-                  leaveCell.textContent = "Full Day";
-                  break;
-                case "first-half":
-                  leaveCell.className = "leave-cell first-half-day";
-                  leaveCell.textContent = "Half Day (AM)";
-                  break;
-                case "second-half":
-                  leaveCell.className = "leave-cell second-half-day";
-                  leaveCell.textContent = "Half Day (PM)";
-                  break;
-              }
+                // Set different styles for different leave types
+                switch (leave.type) {
+                  case "full":
+                    leaveCell.className = "leave-cell";
+                    leaveCell.textContent = "Full Day";
+                    break;
+                  case "first-half":
+                    leaveCell.className = "leave-cell first-half-day";
+                    leaveCell.textContent = "Half Day (AM)";
+                    break;
+                  case "second-half":
+                    leaveCell.className = "leave-cell second-half-day";
+                    leaveCell.textContent = "Half Day (PM)";
+                    break;
+                }
 
-              leaveCell.dataset.leaveId = leave.id;
+                leaveCell.dataset.leaveId = leave.id;
 
-              // Add remove button
-              const removeBtn = document.createElement("button");
-              removeBtn.textContent = "×";
-              removeBtn.className =
-                "ml-1 text-xs bg-red-500 text-white rounded-full w-4 h-4";
-              removeBtn.onclick = () => removeLeave(employee.id, leave.start_date, leave.end_date, leave.type);
+                // Add remove button
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "×";
+                removeBtn.className =
+                  "ml-1 text-xs bg-red-500 text-white rounded-full w-4 h-4";
+                removeBtn.onclick = () =>
+                  removeLeave(
+                    employee.id,
+                    leave.start_date,
+                    leave.end_date,
+                    leave.type
+                  );
 
-              leaveCell.appendChild(removeBtn);
-              dayCell.appendChild(leaveCell);
-            });
+                leaveCell.appendChild(removeBtn);
+                dayCell.appendChild(leaveCell);
+              });
 
-            employeeRow.appendChild(dayCell);
-          }
+              employeeRow.appendChild(dayCell);
+            }
 
-          timelineGrid.appendChild(employeeRow);
-        });
+            timelineGrid.appendChild(employeeRow);
+          });
       }
 
       function removeLeave(employeeId, startDate, endDate, leaveType) {
@@ -454,7 +474,7 @@
           employeeId,
           startDate,
           endDate,
-          leaveType
+          leaveType,
         }).toString();
         fetch(`/api/leaves?${queryString}`, { method: "DELETE" })
           .then((response) => {
@@ -474,6 +494,10 @@
       function isDateInLeaveRange(checkDate, startDate, endDate) {
         const start = new Date(startDate);
         const end = new Date(endDate);
+        // excluding dates that fall on Saturday and Sunday
+        if (checkDate.getDay() === 0 || checkDate.getDay() === 6) {
+          return false;
+        }
         start.setHours(0, 0, 0, 0);
         end.setHours(0, 0, 0, 0);
         checkDate.setHours(0, 0, 0, 0);
